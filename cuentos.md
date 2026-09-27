@@ -42,3 +42,14 @@ El espíritu hizo que Manuel se perdiera en la selva. Días después, la comunid
 La Yacumama, cuyo nombre significa «Madre del Agua» en quechua, es una boa milenaria y gigante que protege los ríos de la Amazonía peruana. Se oculta inmóvil en las profundidades y usa un poder hipnótico y una fuerza de aspiración descomunal para atraer a sus presas.
 
 Los pobladores respetan profundamente su territorio. Antes de navegar por las lagunas sagradas, advierten su presencia con sonidos de tambores o cuernos.
+
+---
+
+# Tuchi aprende a volar
+(2026-09-27)
+
+Tuchi vive feliz en su nido, pero se siente inseguro y prefiere quedarse refugiado en la comodidad de las ramas en lugar de abrir sus alas como los demás pájaros.
+
+Un día, sus amigos y su familia lo alientan a intentarlo, recordándole que nació para recorrer el cielo. Tras mucho dudarlo, Tuchi decide enfrentar su temor, se lanza al vacío y descubre la increíble sensación de volar.
+
+Al final, el pajarito comprende que el miedo es normal, pero que superarlo le permite disfrutar de la verdadera libertad.

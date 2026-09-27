@@ -23,7 +23,7 @@ Aplicación móvil para crear, leer, editar, eliminar y exportar cuentos de la s
 - [x] T2. Contador de palabras en el editor
 - [x] T3. Vista previa de hasta 80 caracteres
 - [x] T4. Confirmar salida con cambios sin guardar
-- [ ] T5. Se agregaron los relatos del Chullachaqui y la Yacumama compartidos por el estudiante y el archivo `cuentos.md`; falta un cuento recopilado por el estudiante
+- [x] T5. Tres relatos compartidos por el estudiante incluidos en la app y en `cuentos.md`
 - [ ] Capturas de la app funcionando en un celular real
 
 ## Requisitos
