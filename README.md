@@ -5,7 +5,7 @@ Aplicación móvil para crear, leer, editar, eliminar y exportar cuentos de la s
 ## Datos de entrega
 
 - Estudiante: completar con el nombre del estudiante
-- Repositorio: `cuentero-<apellido>` (falta confirmar el apellido)
+- Repositorio: `cuentero-pirush`
 - Expo SDK: 57
 
 ## Funcionalidades
