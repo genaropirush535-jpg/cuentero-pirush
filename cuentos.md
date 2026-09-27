@@ -33,3 +33,12 @@ Manuel lo siguió. Mientras avanzaban, la selva se volvió oscura y silenciosa. 
 Al descansar junto a un tronco, un rayo de sol iluminó el pie izquierdo de su compadre: tenía la pata de una cabra. Descubierto, el ser soltó una carcajada y se transformó en un anciano de ojos encendidos. Era el Chullachaqui.
 
 El espíritu hizo que Manuel se perdiera en la selva. Días después, la comunidad lo encontró débil y desorientado. Desde entonces, Manuel dejó de cazar en exceso y aprendió a respetar los secretos del monte.
+
+---
+
+# La Yacumama, madre del agua
+(2026-09-27)
+
+La Yacumama, cuyo nombre significa «Madre del Agua» en quechua, es una boa milenaria y gigante que protege los ríos de la Amazonía peruana. Se oculta inmóvil en las profundidades y usa un poder hipnótico y una fuerza de aspiración descomunal para atraer a sus presas.
+
+Los pobladores respetan profundamente su territorio. Antes de navegar por las lagunas sagradas, advierten su presencia con sonidos de tambores o cuernos.
