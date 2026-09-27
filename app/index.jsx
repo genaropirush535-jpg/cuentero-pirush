@@ -6,24 +6,21 @@ import {
   StyleSheet,
   Pressable,
   Image,
+  Alert,
 } from "react-native";
+import { Stack } from "expo-router";
 import { useFocusEffect, useRouter } from "expo-router";
 
 import {
   prepararBaseDeDatos,
   obtenerCuentos,
 } from "../lib/database";
+import { exportarCuentos } from "../lib/exportarCuentos";
 
 const imagenes = {
   "El delfín rosado": require("../assets/imagenes/images (3).jpg"),
   "La anaconda": require("../assets/imagenes/images .jpg"),
   "La taricaya": require("../assets/imagenes/images (2).jpg"),
-};
-
-const ordenCuentos = {
-  "El delfín rosado": 0,
-  "La anaconda": 1,
-  "La taricaya": 2,
 };
 
 export default function Inicio() {
@@ -40,24 +37,40 @@ export default function Inicio() {
     try {
       prepararBaseDeDatos();
 
-      const datos = obtenerCuentos();
-
-      setCuentos(
-        [...datos].sort(
-          (primero, segundo) =>
-            (ordenCuentos[primero.titulo] ?? 3) -
-            (ordenCuentos[segundo.titulo] ?? 3)
-        )
-      );
+      setCuentos(obtenerCuentos());
     } catch (error) {
       console.log("Error cargando cuentos:", error);
     }
   }
 
+  async function exportar() {
+    try {
+      await exportarCuentos(obtenerCuentos());
+    } catch (error) {
+      console.log("Error exportando cuentos:", error);
+      Alert.alert("No se pudo exportar", "Intenta exportar los cuentos otra vez.");
+    }
+  }
+
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: "Cuentero",
+          headerRight: () => (
+            <Text style={styles.cantidadCabecera}>{cuentos.length} cuentos</Text>
+          ),
+        }}
+      />
       <ScrollView contentContainerStyle={styles.contenidoScroll}>
-        <Text style={styles.tituloPrincipal}>📚 Cuentero</Text>
+        <Text style={styles.tituloPrincipal}>Mis cuentos de la selva</Text>
+        <Pressable
+          style={styles.botonExportar}
+          onPress={exportar}
+          disabled={cuentos.length === 0}
+        >
+          <Text style={styles.textoBotonExportar}>Exportar cuentos</Text>
+        </Pressable>
 
         {cuentos.map((cuento) => (
           <Pressable
@@ -69,13 +82,21 @@ export default function Inicio() {
               <Image
                 source={imagenes[cuento.titulo]}
                 style={styles.imagen}
+                resizeMode="cover"
               />
             )}
 
             <View style={styles.contenido}>
               <Text style={styles.titulo}>{cuento.titulo}</Text>
 
-              <Text style={styles.texto}>{cuento.cuerpo}</Text>
+              <Text style={styles.fecha}>
+                Editado: {new Date(cuento.editado_en).toLocaleDateString("es-PE")}
+              </Text>
+
+              <Text style={styles.texto} numberOfLines={2}>
+                {cuento.cuerpo.slice(0, 80)}
+                {cuento.cuerpo.length > 80 ? "..." : ""}
+              </Text>
             </View>
           </Pressable>
         ))}
@@ -103,10 +124,29 @@ const styles = StyleSheet.create({
   },
 
   tituloPrincipal: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 14,
+  },
+
+  cantidadCabecera: {
+    color: "#555555",
+    fontSize: 14,
+    marginRight: 12,
+  },
+
+  botonExportar: {
+    alignSelf: "flex-end",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginBottom: 14,
+    backgroundColor: "#e8f1e9",
+    borderRadius: 6,
+  },
+
+  textoBotonExportar: {
+    color: "#245b3c",
+    fontWeight: "600",
   },
 
   tarjeta: {
@@ -119,7 +159,6 @@ const styles = StyleSheet.create({
   imagen: {
     width: "100%",
     height: 200,
-    resizeMode: "cover",
   },
 
   contenido: {
@@ -129,6 +168,12 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 22,
     fontWeight: "bold",
+    marginBottom: 4,
+  },
+
+  fecha: {
+    color: "#666666",
+    fontSize: 13,
     marginBottom: 8,
   },
 

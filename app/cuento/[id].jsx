@@ -8,7 +8,7 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 
 import {
   prepararBaseDeDatos,
@@ -16,14 +16,31 @@ import {
   actualizarCuento,
   eliminarCuento,
 } from "../../lib/database";
+import { usePreventRemove } from "expo-router/react-navigation";
+import { ConfirmacionSalida } from "../../components/ConfirmacionSalida";
+
+function contarPalabras(texto) {
+  const contenido = texto.trim();
+  return contenido ? contenido.split(/\s+/).length : 0;
+}
 
 export default function CuentoDetalle() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
+  const navigation = useNavigation();
 
   const [cuento, setCuento] = useState(null);
   const [titulo, setTitulo] = useState("");
   const [cuerpo, setCuerpo] = useState("");
+  const [salidaPendiente, setSalidaPendiente] = useState(null);
+
+  const cambiosSinGuardar = Boolean(
+    cuento && (titulo !== cuento.titulo || cuerpo !== cuento.cuerpo)
+  );
+
+  usePreventRemove(cambiosSinGuardar, ({ data }) => {
+    setSalidaPendiente(data.action);
+  });
 
   useEffect(() => {
     cargarCuento();
@@ -59,7 +76,12 @@ export default function CuentoDetalle() {
     }
 
     try {
-      actualizarCuento(id, titulo.trim(), cuerpo.trim());
+      const tituloGuardado = titulo.trim();
+      const cuerpoGuardado = cuerpo.trim();
+      actualizarCuento(id, tituloGuardado, cuerpoGuardado);
+      setTitulo(tituloGuardado);
+      setCuerpo(cuerpoGuardado);
+      setCuento({ ...cuento, titulo: tituloGuardado, cuerpo: cuerpoGuardado });
 
       Alert.alert(
         "Guardado",
@@ -96,6 +118,7 @@ export default function CuentoDetalle() {
           onPress: () => {
             try {
               eliminarCuento(id);
+              setCuento({ ...cuento, titulo, cuerpo });
 
               Alert.alert(
                 "Cuento borrado",
@@ -170,6 +193,10 @@ export default function CuentoDetalle() {
         textAlignVertical="top"
       />
 
+      <Text style={styles.contadorPalabras}>
+        {contarPalabras(cuerpo)} palabras
+      </Text>
+
       <Pressable
         style={styles.botonGuardar}
         onPress={guardarCambios}
@@ -196,6 +223,16 @@ export default function CuentoDetalle() {
           ← Volver al inicio
         </Text>
       </Pressable>
+      <ConfirmacionSalida
+        visible={Boolean(salidaPendiente)}
+        mensaje="Hay cambios sin guardar. ¿Quieres salir sin guardarlos?"
+        onCancelar={() => setSalidaPendiente(null)}
+        onDescartar={() => {
+          const accion = salidaPendiente;
+          setSalidaPendiente(null);
+          if (accion) navigation.dispatch(accion);
+        }}
+      />
     </ScrollView>
   );
 }
@@ -237,6 +274,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     minHeight: 220,
     marginBottom: 20,
+  },
+
+  contadorPalabras: {
+    color: "#555555",
+    fontSize: 14,
+    textAlign: "right",
+    marginTop: -12,
+    marginBottom: 12,
   },
 
   botonGuardar: {

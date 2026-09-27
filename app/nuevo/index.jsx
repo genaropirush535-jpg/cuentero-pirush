@@ -7,14 +7,27 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
+import { usePreventRemove } from "expo-router/react-navigation";
 import { crearCuento } from "../../lib/database";
+import { ConfirmacionSalida } from "../../components/ConfirmacionSalida";
+
+function contarPalabras(texto) {
+  const contenido = texto.trim();
+  return contenido ? contenido.split(/\s+/).length : 0;
+}
 
 export default function NuevoCuento() {
   const router = useRouter();
+  const navigation = useNavigation();
 
   const [titulo, setTitulo] = useState("");
   const [cuerpo, setCuerpo] = useState("");
+  const [salidaPendiente, setSalidaPendiente] = useState(null);
+
+  usePreventRemove(Boolean(titulo || cuerpo), ({ data }) => {
+    setSalidaPendiente(data.action);
+  });
 
   function guardarCuento() {
     if (titulo.trim() === "" || cuerpo.trim() === "") {
@@ -27,6 +40,8 @@ export default function NuevoCuento() {
 
     try {
       crearCuento(titulo.trim(), cuerpo.trim());
+      setTitulo("");
+      setCuerpo("");
 
       Alert.alert("Cuento guardado", "El cuento se guardó correctamente.", [
         {
@@ -68,6 +83,10 @@ export default function NuevoCuento() {
         textAlignVertical="top"
       />
 
+      <Text style={styles.contadorPalabras}>
+        {contarPalabras(cuerpo)} palabras
+      </Text>
+
       <Pressable style={styles.boton} onPress={guardarCuento}>
         <Text style={styles.textoBoton}>💾 Guardar cuento</Text>
       </Pressable>
@@ -75,6 +94,16 @@ export default function NuevoCuento() {
       <Pressable style={styles.botonCancelar} onPress={() => router.back()}>
         <Text style={styles.textoCancelar}>Cancelar</Text>
       </Pressable>
+      <ConfirmacionSalida
+        visible={Boolean(salidaPendiente)}
+        mensaje="El cuento todavía no se ha guardado. ¿Quieres salir?"
+        onCancelar={() => setSalidaPendiente(null)}
+        onDescartar={() => {
+          const accion = salidaPendiente;
+          setSalidaPendiente(null);
+          if (accion) navigation.dispatch(accion);
+        }}
+      />
     </View>
   );
 }
@@ -111,6 +140,13 @@ const styles = StyleSheet.create({
 
   textArea: {
     height: 180,
+  },
+
+  contadorPalabras: {
+    color: "#555555",
+    fontSize: 14,
+    textAlign: "right",
+    marginTop: -12,
   },
 
   boton: {
