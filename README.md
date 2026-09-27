@@ -4,7 +4,7 @@ Aplicación móvil para crear, leer, editar, eliminar y exportar cuentos de la s
 
 ## Datos de entrega
 
-- Estudiante: completar con el nombre del estudiante
+- Estudiante: Genaro Pirush
 - Repositorio: `cuentero-pirush`
 - Expo SDK: 57
 
