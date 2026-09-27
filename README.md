@@ -24,7 +24,7 @@ Aplicación móvil para crear, leer, editar, eliminar y exportar cuentos de la s
 - [x] T3. Vista previa de hasta 80 caracteres
 - [x] T4. Confirmar salida con cambios sin guardar
 - [x] T5. Tres relatos compartidos por el estudiante incluidos en la app y en `cuentos.md`
-- [ ] Capturas de la app funcionando en un celular real
+- [x] Capturas de la app funcionando en un celular real
 
 ## Requisitos
 
@@ -60,4 +60,10 @@ Pulsa **Exportar cuentos** en la pantalla principal. En el celular se genera y c
 
 ## Evidencias
 
-Agregar aquí capturas tomadas en un celular real antes de entregar.
+Lista de cuentos en el celular:
+
+![Lista de cuentos de Cuentero](assets/capturas/lista-cuentos.png)
+
+Detalle de «La trampa del cazador» en el celular:
+
+![Detalle del cuento La trampa del cazador](assets/capturas/cuento-chullachaqui.png)
